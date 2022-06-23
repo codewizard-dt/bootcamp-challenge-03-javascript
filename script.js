@@ -16,11 +16,25 @@ function generatePassword() {
   let length = Number(prompt('Password length (8 to 128)'))
 
   // Create array of available characters
+  // Keep track of which sets are included
   const availableChars = [];
-  if (useSpecialChars) availableChars.push(...specialChars)
-  if (useUpperCase) availableChars.push(...upperCase)
-  if (useLowerCase) availableChars.push(...lowerCase)
-  if (useDigit) availableChars.push(...digit)
+  const availableMsg = [];
+  if (useSpecialChars) {
+    availableChars.push(...specialChars)
+    availableMsg.push('special characters')
+  }
+  if (useUpperCase) {
+    availableChars.push(...upperCase)
+    availableMsg.push('upper case letters')
+  }
+  if (useLowerCase) {
+    availableChars.push(...lowerCase)
+    availableMsg.push('lower case letters')
+  }
+  if (useDigit) {
+    availableChars.push(...digit)
+    availableMsg.push('numbers')
+  }
 
   // If no available characters display error and break
   if (availableChars.length === 0) {
@@ -38,6 +52,10 @@ function generatePassword() {
   while (pw.length < length) {
     pw += availableChars[Math.floor(Math.random() * availableChars.length)]
   }
+
+  // Generate a message for the user
+  message.innerHTML = `Using: ${availableMsg.join(', ')}<br>Length: ${length}`
+
   return pw;
 }
 
